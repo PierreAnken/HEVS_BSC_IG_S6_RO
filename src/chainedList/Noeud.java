@@ -18,7 +18,11 @@ public Noeud(Noeud n)
     suivant = n.suivant ;
     }
 
-
+public Noeud(int valeur)
+{
+info = new Info(valeur) ;
+suivant = null;
+}
 
 public Noeud(Info info)
     {

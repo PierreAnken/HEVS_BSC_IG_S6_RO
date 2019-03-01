@@ -134,12 +134,35 @@ public class File {
 
 	    while (courant != null)
 	    {
-	      //System.out.print(courant.getInfo().toString()+ " ");
+	      
 	    	System.out.print(courant.getInfo().getValeur()+ " ");
 	      courant = courant.getSuivant() ;
 	    }
 	    System.out.println();
 	  }
+	  
+	  public void removeFromValue(int value)
+	  {
+		int courantPos = 1; 
+	    Noeud courant = premier ;
+	    
+	    while (courant != null)
+	    {
+	    	Info info = courant.getInfo();
+	      if(info != null) {
+	    	  if(info.getValeur() == value) {
+	    		  //remove noeud
+	    		  this.defileElement(courantPos);
+	    		  break;
+	    	  }
+	      }
+	    	
+	      courant = courant.getSuivant() ;
+	      courantPos++;
+	    }
+	    System.out.println();
+	  }
+	  
 
 	  public String toString()
 	  {
