@@ -129,9 +129,8 @@ public class File {
 
 	  public void affiche()
 	  {
-		System.out.println();
 	    Noeud courant = premier ;
-
+	    System.out.print("File: ");
 	    while (courant != null)
 	    {
 	      
