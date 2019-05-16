@@ -1,4 +1,4 @@
-package additionMatrix;
+package matriceCreuses;
 
 public class Matrice {
 	int n;		// nombre de ligne
