@@ -1,53 +1,53 @@
-package dijkastraGraph;
+package baseObjects;
+
+import baseObjects.File;
+import baseObjects.Info;
+import baseObjects.Noeud;
 
 public class Graphe {
-
+		
 	private File[] liste = null;
 	private int[] predecesseur = null;
+	private int nbrSommet = 0;
+	private int col = 0;	// nombre de colonnes
 	private int[] pred = null;
 	private int[] lambda = null;
-	private int n = 0;
-	private int col = 0;	// nombre de colonnes
 	private final int _INFINITY_ = 999999999;
-
+	
 	public Graphe(int matrice[][])
 	{
-
-		graphe(matrice.length,matrice[0].length);
-
+	
+		this.nbrSommet =  matrice.length;
+		this.predecesseur = new int[nbrSommet];
+		
+		this.liste = new File [nbrSommet];
+		for (int i = 0; i < nbrSommet; i++) 
+			liste[i] = new File();
+		
 		for (int i=0 ; i<matrice.length ; i++){						
 			for (int j=0 ; j<matrice[i].length; j++)
 				liste[i].enfile(new Noeud(new Info(matrice[i][j])));
 		}
-
-	}
-
+	}	
+		
 	public Graphe(int[][] matriceS, int[][] matriceL) {
-		this.n = matriceS.length ;
-
-		liste = new File[n] ;
-		for (int i=0 ; i<n ; i++)
+		this.nbrSommet = matriceS.length ;
+	
+		liste = new File[nbrSommet] ;
+		for (int i=0 ; i<nbrSommet ; i++)
 			liste[i] = new File() ;
-
-		pred = new int[n] ;
-
-		lambda = new int[n] ;
-
+		
+		pred = new int[nbrSommet] ;
+	
+		lambda = new int[nbrSommet] ;
+	
 		for (int i=0 ; i<matriceS.length ; i++)	// boucle sur la matrice
 			for (int j=0 ; j<matriceS[i].length; j++)
 				liste[i].enfile(new Noeud(new Info(matriceS[i][j], matriceL[i][j])));
 
 	}
 
-	private void graphe(int n, int col){
-		this.n = n;
-		this.col = col;
-		this.predecesseur = new int[n];
-
-		this.liste = new File [n];
-		for (int i = 0; i < n; i++) 
-			liste[i] = new File();
-	}
+	
 	public boolean[] exploreFile (int valeur){
 		/*
 		F = {a}
@@ -57,17 +57,21 @@ public class Graphe {
 			le sortir de F
 			introduire tous les successeurs de s non marques dans F
 		 */
-		boolean[] marques = new boolean[this.n];
-		this.predecesseur = new int[n];
+		boolean[] marques = new boolean[this.nbrSommet];
+		this.predecesseur = new int[nbrSommet];
 		int s = valeur;
 		File F = new File();
 		// depuis le sommet
 		F.enfile(new Noeud(new Info(valeur)));
-
-		while (!F.estVide()){						// tant que F est non vide
+		
+		while (!F.estVide()){	
+			// tant que F est non vide
 			s = F.defile().getInfo().getValeur();	// le sortir de F
 			marques[s] = true;							// marquer s
-			System.out.println("s = "+s);afficheFiles();
+			System.out.println("s = "+s);
+			
+			afficheFiles();
+			
 			// introduire tous les successeurs de s non marques dans F
 			Noeud courant = liste[s].getPremier();
 			while (courant != null){
@@ -80,17 +84,18 @@ public class Graphe {
 				courant = courant.getSuivant();
 			}
 		}
-
+		
 		for (int i = 0; i < marques.length; i++) {
 			System.out.println("marques["+i+"] = "+marques[i]+" : predecesseur["+i+"] = "+predecesseur[i]);
 		}
-
+		
 		return marques;
 	}
+	
 	public void chemin(int depart, int arrivee){
 		boolean[] destinations = exploreFile(depart);
 		if (destinations[arrivee] == false){
-			System.out.println("Solution impossile: aucune destination");
+			System.out.println("Solution impossible: aucune destination");
 			return;
 		}
 		File fileResultat = new File();
@@ -103,25 +108,9 @@ public class Graphe {
 		System.out.println("Chemin trouve ");
 		fileResultat.affiche();
 	}
-	public void afficheFiles() {
-		System.out.println("\n----- Affiche liste de files -----");
-		for (int i = 0; i < liste.length; i++) {
-			System.out.print("file "+i+": \t");
-			//liste[i].affiche();
-
-			Noeud courant = liste[i].getPremier() ;
-
-			while (courant != null)
-			{
-				System.out.print(courant.getInfo().getValeur()+ " ");
-				courant = courant.getSuivant() ;
-			}
-			System.out.println();	
-		}
-	}
-
+	
 	public void afficheSuccEtDist() {
-		for (int i=0 ; i<n ; i++)
+		for (int i=0 ; i<nbrSommet ; i++)
 		{
 			System.out.print("ligne " + i + ": ");
 			Noeud courant = liste[i].getPremier();
@@ -136,54 +125,62 @@ public class Graphe {
 		System.out.println();
 
 	}
-
-	public void dijkstra() {
-		boolean[] marques = new boolean[n];
-		// initialisation du tableau lambda
-		initLambdaMarques();
-
-		// BOUCLER ICI (while  minVal = _INFINITY_ ??)
-		int minVal = _INFINITY_; 
-		int minNDX = 0; 		
-
-		for(int k = 0; k < n; k++) {
-			minVal = _INFINITY_;
-			minNDX = 0;
-			for (int i = 0; i < lambda.length; i++) {
-				// si n'est pas marque
-				if(marques[i] == false){
-					// si la valeur du lambda est inferieur, on prend la valeur et l'index 
-					if(lambda[i] < minVal){
-						minVal = lambda[i];	// fixe la valeur
-						minNDX = i;			// fixe l'index
-					}
-				}
-			}
-			// ici je reception mon minNDX (index lanbda)
-			marques[minNDX] = true;
-			Noeud courant = liste[minNDX].getPremier();
+	
+	public void afficheFiles() {
+		System.out.println("\n----- Affiche liste de files -----");
+		for (int i = 0; i < liste.length; i++) {
+			System.out.print("file "+i+": \t");
+			//liste[i].affiche();
+	
+			Noeud courant = liste[i].getPremier() ;
+	
 			while (courant != null)
 			{
-				int s = courant.getInfo().getValeur();
-				int newDist = lambda[minNDX] + courant.getInfo().getDistance();
-				lambda[s] = Math.min(lambda[s], newDist);
-
-				courant = courant.getSuivant();
+				System.out.print(courant.getInfo().getValeur()+ " ");
+				courant = courant.getSuivant() ;
 			}
-		};
-
+			System.out.println();	
+		}
 	}
 
-	private void initLambdaMarques() {
-		lambda[0] = 0;
-		for (int i=1 ; i<n ; i++)
-			lambda[i] = _INFINITY_;
-
+	
+	public void explorationSimple(int depart) {
+		explorationSimple(depart,this);
 	}
-
+	public static void explorationSimple(int depart, Graphe graphe)
+	{
+	    boolean[] marque = new boolean[graphe.nbrSommet] ;
+	
+	    for (int i=0 ; i<graphe.nbrSommet ; i++)  // initialisation
+	         marque[i] = false ;
+	    
+	    File file = new File();
+	    file.enfile(new Noeud(new Info(depart))) ;  // On met depart dans la file
+	
+	    while (!file.estVide())                         // F non vide
+	    {
+	         int sommet = file.defile().getInfo().getValeur();  // s un élément de F on le sort
+	         marque[sommet] = true ;                      //  marquage du premier
+	         System.out.println("marquage de: " + sommet);
+	
+	         Noeud courant = graphe.liste[sommet].getPremier() ;
+	         while (courant!= null)
+	        {
+	        int successeur = courant.getInfo().getValeur();
+	         if (marque[successeur] == false)   // non marqué
+	            {
+	              if (file.rechercheValeur(successeur) == 0)
+	                  file.enfile(new Noeud(new Info(courant.getInfo().getValeur()))) ;
+	            }
+	            courant = courant.getSuivant() ;
+	        }
+	     }
+	    
+	}
+	
 	public void afficheLambda() {
 		// 
-		for (int i=0 ; i<n ; i++)
+		for (int i=0 ; i<nbrSommet ; i++)
 			System.out.print(lambda[i]+"  ");
 
 	}
@@ -194,18 +191,18 @@ public class Graphe {
 		
 		public void dijkstra_CORRIGE()
 	    {
-			for (int i=0 ; i<n ; i++)  // initialisation
+			for (int i=0 ; i<nbrSommet ; i++)  // initialisation
 				lambda[i] = _INFINITY_;//MAX ;
 
-			for (int i=0 ; i<n ; i++)
+			for (int i=0 ; i<nbrSommet ; i++)
 				pred[i] = -1 ;
 
-			boolean definitif[] = new boolean[n] ;
+			boolean definitif[] = new boolean[nbrSommet] ;
 
 			pred[0] = 0 ;
 			lambda[0] = 0 ;
 
-			for (int k=1 ; k<n ; k++)
+			for (int k=1 ; k<nbrSommet ; k++)
 	        {
 				// recherche du sommet minimum
 				int sommet = sommetMin(definitif) ;
@@ -234,7 +231,7 @@ public class Graphe {
 			int sommet = -1 ;
 			int min = _INFINITY_;//MAX ;
 
-			for (int i=0 ; i<n ; i++)
+			for (int i=0 ; i<nbrSommet ; i++)
 	        {
 				if (!definitif[i] && lambda[i] < min)
 	            {
@@ -245,5 +242,5 @@ public class Graphe {
 
 	    return sommet ;
 	    }
-
 }
+

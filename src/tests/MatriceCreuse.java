@@ -1,5 +1,8 @@
-package matriceCreuses;
-public class testMain {
+package tests;
+
+import baseObjects.Matrice;
+
+public class MatriceCreuse {
 
 	public static void main(String[] args) {
 

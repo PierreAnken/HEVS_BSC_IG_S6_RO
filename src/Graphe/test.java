@@ -1,4 +1,7 @@
-package graph;
+package Graphe;
+
+import baseObjects.Graphe;
+
 public class test {
 
 	public static void main(String[] args) {
@@ -19,10 +22,10 @@ public class test {
 		graphe.exploreFile(0);
 		graphe.afficheFiles();
 
-//		graphe.exploreFile(0);
-//		graphe.afficheFiles();
+		graphe.exploreFile(0);
+		graphe.afficheFiles();
 
-		//		graphe.chemin(0,7);
+		graphe.chemin(0,7);
 	}
 
 }

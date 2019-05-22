@@ -1,4 +1,4 @@
-package dijkastraGraph;
+package baseObjects;
 
 public class Matrice {
 	int n;		// nombre de ligne
@@ -42,7 +42,7 @@ public class Matrice {
 
 			for (int j = 0; j < col; j++) {
 				// si colonne 
-				if(courant != null && courant.getInfo().getDistance() == j){
+				if(courant != null && courant.getInfo().getColonne() == j){
 					valeur = courant.getInfo().getValeur();
 					courant = courant.getSuivant();
 				}
@@ -82,12 +82,12 @@ public class Matrice {
 			while (!liste[i].estVide() && !matrice2.liste[i].estVide())
 			{
 				// si meme colonne
-				if(courant.getInfo().getDistance() == courant2.getInfo().getDistance()){
+				if(courant.getInfo().getColonne() == courant2.getInfo().getColonne()){
 					// addition valeurs
 					int newValeur = courant.getInfo().getValeur() + courant2.getInfo().getValeur();
 					// si <> 0 ajoute dans set la info et file temp
 					if(newValeur != 0){
-						Info info = new Info(newValeur,courant.getInfo().getDistance());
+						Info info = new Info(newValeur,courant.getInfo().getColonne());
 						courant.setInfo(info);
 						file3.enfile(courant);
 					}
@@ -96,7 +96,7 @@ public class Matrice {
 					courant = liste[i].getPremier();
 					matrice2.liste[i].defile();
 					courant2 = matrice2.liste[i].getPremier();
-				}else if(courant.getInfo().getDistance() < courant2.getInfo().getDistance()){
+				}else if(courant.getInfo().getColonne() < courant2.getInfo().getColonne()){
 				}else{
 					file3.enfile(courant2);
 					courant2 = courant2.getSuivant();

@@ -1,4 +1,4 @@
-package dijkastraGraph;
+package baseObjects;
 
 public class File {
 
@@ -225,7 +225,7 @@ public class File {
 			while(!travail.estVide()){
 				int courant = travail.getPremier().getInfo().getValeur();
 
-				//				System.out.println("courant="+courant+"; exp="+exp+"; Math.pow(10, exp)="+(Math.pow(10, exp)));
+				//System.out.println("courant="+courant+"; exp="+exp+"; Math.pow(10, exp)="+(Math.pow(10, exp)));
 				courant = (int) (courant/(Math.pow(10, exp))%10);
 				files[courant].enfile(travail.defile());
 			}
@@ -235,15 +235,40 @@ public class File {
 		}
 		return travail;
 	}
+	
 	public void radixSort(){
 		// this: pour trier la file en cours elle-meme
 		radixSort(this);
 	}
+	
+	
 	public void fusionne(File file){
+
 		// fusionne toutes les files, meme pas triees
 		// concatene la file e elle meme 
 		concat(file);
 		// trie elle-meme
 		radixSort();
 	}
+	
+	public static File qSortFusion(File f1, File f2){
+
+        File f3 = new File();
+        while(!f1.estVide()&& !f2.estVide()){
+        	
+        	//on ajoute la plus petite valeur suivante à la file
+             int val1 = f1.getPremier().getInfo().getValeur();
+             int val2 = f2.getPremier().getInfo().getValeur();
+             if (val1 < val2)
+                  f3.enfile(f1.defile());
+             else
+                  f3.enfile(f2.defile());
+
+        }
+        f3.concat(f1);
+        f3.concat(f2);
+        return f3;
+    }
+	
+	
 }

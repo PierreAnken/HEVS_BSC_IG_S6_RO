@@ -1,4 +1,7 @@
-package dijkastraGraph;
+package tests;
+
+import baseObjects.Graphe;
+
 public class TestDijkstraBis {
 
 	/**
@@ -29,7 +32,7 @@ public class TestDijkstraBis {
 		Graphe graphe = new Graphe(matrice1Suc,  matrice1Dist) ;
 		graphe.afficheSuccEtDist();
 		
-		graphe.dijkstra() ;
+		graphe.dijkstra_CORRIGE() ;
 		graphe.afficheLambda() ;
 
 	}

@@ -1,8 +1,10 @@
-package dijkastraGraph;
+package baseObjects;
+
 
 public class Info {
 	private int valeur;
 	private int distance;
+	private int colonne;
 	
 	public Info(int valeur, int distance) 
 	{
@@ -28,5 +30,9 @@ public class Info {
 	public String toString()
 	{
 		return (valeur  + "/" + distance + " , ") ;
+	}
+
+	public int getColonne() {
+		return colonne;
 	}
 }

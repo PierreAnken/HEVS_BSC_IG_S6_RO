@@ -1,5 +1,10 @@
-package radixSort;
-public class Test {
+package tests;
+
+import baseObjects.File;
+import baseObjects.Info;
+import baseObjects.Noeud;
+
+public class RadixSort {
 	public static void main(String[] args) {
 		File travail = new File();
 		travail.enfile(new Noeud( new Info(123)));
