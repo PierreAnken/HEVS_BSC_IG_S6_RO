@@ -2,23 +2,22 @@ package tests;
 
 import baseObjects.Graphe;
 
-public class Exploration {
+public class ComptageArc {
 
 	public static void main(String[] args) {
-		
-		int matrice[][] = {{1, 2, 3},
+		int matrice[][] = {
+				{3,5},
+				{0,3,2},
+				{3,4},
 				{4},
-				{4,5,6},
-				{6},
-				{7},
-				{7},
-				{7},
-				{}};
-
-			
+				{},
+				{0,4}
+		};
+		
 		Graphe graphe = new Graphe(matrice);
-		graphe.explorationSimple(0);
 		graphe.afficheFiles();
+		graphe.getArcs();
+
 	}
 
 }

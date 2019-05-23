@@ -1,8 +1,8 @@
-package Graphe;
+package tests;
 
 import baseObjects.Graphe;
 
-public class test {
+public class Graphes {
 
 	public static void main(String[] args) {
 

@@ -13,7 +13,9 @@ public class Graphe {
 	private int[] pred = null;
 	private int[] lambda = null;
 	private final int _INFINITY_ = 999999999;
+	private int arcs = 0;
 	
+
 	public Graphe(int matrice[][])
 	{
 	
@@ -47,6 +49,7 @@ public class Graphe {
 
 	}
 
+	
 	
 	public boolean[] exploreFile (int valeur){
 		/*
@@ -143,6 +146,37 @@ public class Graphe {
 		}
 	}
 
+	public void couplageSimple() {
+		
+		boolean[] couplages = new boolean[this.nbrSommet];
+		
+		//pour chaque employé
+		for (int i = 0; i < liste.length; i++) {
+			
+			Noeud n = liste[i].defile();
+			File couplagesM = new File();
+			
+			//pour chaque machine utilisable
+			while(n != null ) {
+				
+				//si machine libre et employé sans machine
+				if(!couplages[n.getInfo().getValeur()] && couplagesM.estVide()) {
+					
+					//on la marque
+					couplages[n.getInfo().getValeur()] = true;
+					
+					//on la garde
+					couplagesM.enfile(n);
+				}
+				
+				n = liste[i].defile();
+			}
+			
+			//on sauvegarde la machine attribuée
+			liste[i].concat(couplagesM);
+		
+		}
+	}
 	
 	public void explorationSimple(int depart) {
 		explorationSimple(depart,this);
@@ -242,5 +276,40 @@ public class Graphe {
 
 	    return sommet ;
 	    }
+
+		public void getArcs() {
+			arcs = 0;
+			for(File file : liste) {
+				arcs+=file.getLongueur();
+			}
+			System.out.println("Nombre d'arcs: "+arcs);
+		}
+
+		public void convertBidirectionnel() {
+			
+			//pour chaque sommet
+			for(int sommet = 0; sommet <liste.length; sommet++ ) {		
+				//pour chaque arc
+				Noeud n = liste[sommet].getPremier();
+				while(n != null) {
+					//si un sens inverse n'existe pas
+					if(liste[n.getInfo().getValeur()].rechercheValeur(sommet) == 0)
+						//On le crée
+						liste[n.getInfo().getValeur()].enfile(new Noeud(new Info(sommet)));
+					
+					n = n.getSuivant();
+				}	
+			}
+			//on trie les successeurs pour faire joli
+			trieSuccesseursSommets();
+			System.out.println("Graphe convertit en bidirectionnel");
+		}
+		
+		public void trieSuccesseursSommets() {
+			for(File sommet : liste)
+			{
+				sommet.radixSort();
+			}
+		}
 }
 

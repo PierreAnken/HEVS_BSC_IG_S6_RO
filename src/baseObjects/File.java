@@ -220,15 +220,15 @@ public class File {
 		for (int i = 0; i < 10; i++) {
 			files[i] = new File();
 		}
-		// on execute 10 fois pour unites, dizaines, et les centaines et...
-		for (int exp = 0; exp < 10; exp++) {
+		// pour chaque unité
+		for (int exp = 0; exp < 1; exp++) {
 			while(!travail.estVide()){
 				int courant = travail.getPremier().getInfo().getValeur();
-
-				//System.out.println("courant="+courant+"; exp="+exp+"; Math.pow(10, exp)="+(Math.pow(10, exp)));
+				System.out.println("courant="+courant+"; exp="+exp+"; Math.pow(10, exp)="+(Math.pow(10, exp)));
 				courant = (int) (courant/(Math.pow(10, exp))%10);
 				files[courant].enfile(travail.defile());
 			}
+			
 			for (int i = 0; i < 10; i++) {
 				travail.concat(files[i]);
 			}
