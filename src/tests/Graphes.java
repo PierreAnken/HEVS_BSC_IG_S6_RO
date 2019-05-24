@@ -25,7 +25,7 @@ public class Graphes {
 		graphe.exploreFile(0);
 		graphe.afficheFiles();
 
-		graphe.chemin(0,7);
+		graphe.afficheChemin(0,7);
 	}
 
 }

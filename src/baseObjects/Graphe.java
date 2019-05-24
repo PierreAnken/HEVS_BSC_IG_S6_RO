@@ -71,9 +71,9 @@ public class Graphe {
 			// tant que F est non vide
 			s = F.defile().getInfo().getValeur();	// le sortir de F
 			marques[s] = true;							// marquer s
-			System.out.println("s = "+s);
+			//System.out.println("s = "+s);
 			
-			afficheFiles();
+			//afficheFiles();
 			
 			// introduire tous les successeurs de s non marques dans F
 			Noeud courant = liste[s].getPremier();
@@ -89,13 +89,13 @@ public class Graphe {
 		}
 		
 		for (int i = 0; i < marques.length; i++) {
-			System.out.println("marques["+i+"] = "+marques[i]+" : predecesseur["+i+"] = "+predecesseur[i]);
+			//System.out.println("marques["+i+"] = "+marques[i]+" : predecesseur["+i+"] = "+predecesseur[i]);
 		}
 		
 		return marques;
 	}
 	
-	public void chemin(int depart, int arrivee){
+	public void afficheChemin(int depart, int arrivee){
 		boolean[] destinations = exploreFile(depart);
 		if (destinations[arrivee] == false){
 			System.out.println("Solution impossible: aucune destination");
@@ -310,6 +310,60 @@ public class Graphe {
 			{
 				sommet.radixSort();
 			}
+		}
+
+		public void affichePlusPetiteArrete() {
+			//CC 24.05.2019
+			int distanceMin = _INFINITY_;
+			int sommetMin = -1;
+			int sommetDestMin = -1;
+			
+			//pour chaque sommet de la liste
+			for(int sommet = 0; sommet < liste.length; sommet++) {
+				
+				//pour chaque successeur du sommet
+				Noeud courant = liste[sommet].getPremier() ;
+				while (courant != null)
+	            {
+					//si la distance est plus petite que la valeur enregistrée
+					if(courant.getInfo().getDistance()<distanceMin) {
+						distanceMin = courant.getInfo().getDistance();
+						sommetMin =  sommet;
+						sommetDestMin = courant.getInfo().getValeur();
+					}
+	            	courant = courant.getSuivant() ;
+	            }
+			}
+			System.out.println("La plus petite arête du graphe est l'arête ("+sommetMin+", "+sommetDestMin+") de valeur "+distanceMin);
+		}
+
+		public boolean aUnChemin(int depart, int arrivee){
+			//CC 24.05.2019
+			
+			boolean[] destinations = exploreFile(depart);
+			if (destinations[arrivee] == false){
+				return false;
+			}
+			File fileResultat = new File();
+			int enCours = arrivee;
+			while (enCours != depart){
+				fileResultat.enfile(new Noeud(new Info(enCours)));
+				enCours = predecesseur[enCours];
+			}
+			fileResultat.enfile(new Noeud(new Info(depart)));
+			return true;
+		}
+		
+		public void fortementConnexe(int sommetA, int sommetB) {
+			//CC 24.05.2019
+			
+			// 2 sommets sont fortement connexes s'il existe un chemin aller-retour entre les 2
+			
+			boolean cheminAller = aUnChemin(sommetA,sommetB);
+			boolean cheminRetour = aUnChemin(sommetB,sommetA);
+			
+			System.out.println("Est-ce que les sommets "+sommetA+" et "+sommetB+" sont dans la même composante fortement connexe? "+(cheminAller && cheminRetour));
+		
 		}
 }
 

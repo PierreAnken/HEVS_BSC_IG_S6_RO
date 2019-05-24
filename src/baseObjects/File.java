@@ -221,10 +221,10 @@ public class File {
 			files[i] = new File();
 		}
 		// pour chaque unité
-		for (int exp = 0; exp < 1; exp++) {
+		for (int exp = 0; exp < 2; exp++) {
 			while(!travail.estVide()){
 				int courant = travail.getPremier().getInfo().getValeur();
-				System.out.println("courant="+courant+"; exp="+exp+"; Math.pow(10, exp)="+(Math.pow(10, exp)));
+				//System.out.println("courant="+courant+"; exp="+exp+"; Math.pow(10, exp)="+(Math.pow(10, exp)));
 				courant = (int) (courant/(Math.pow(10, exp))%10);
 				files[courant].enfile(travail.defile());
 			}
@@ -269,6 +269,19 @@ public class File {
         f3.concat(f2);
         return f3;
     }
+
+	public void inverse() {
+		//CC 24.05.2019
+		
+		Noeud n = defile();
+		
+		if(n == null)
+			return;
+		
+		inverse();
+		enfile(n);
+		
+	}
 	
 	
 }
