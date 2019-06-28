@@ -31,6 +31,11 @@ public class Info {
 		return valeur ;
 	}
 	
+	public void setValeur(int valeur)
+	{
+		this.valeur = valeur ;
+	}
+	
 	public int getDistance()
 	{
 		return distance ;

@@ -367,5 +367,55 @@ public class Graphe {
 			System.out.println("Est-ce que les sommets "+sommetA+" et "+sommetB+" sont dans la même composante fortement connexe? "+fortementConnexe);
 		
 		}
+		
+		public Graphe(int matrice[][], boolean isDistancier)
+		{
+			//module 28.06.2019
+			this.nbrSommet =  matrice.length;
+			this.predecesseur = new int[nbrSommet];
+			
+			//liste de listes
+			this.liste = new File [nbrSommet];
+			for(int i = 0; i < nbrSommet; i++) 
+				liste[i] = new File();
+			
+			//pour chaque ligne (file)
+			for (int i=0 ; i<matrice.length ; i++){		
+				
+				//pour chaque valeur
+				for (int j=0 ; j<matrice[i].length; j++) {
+					
+					int distance = matrice[i][j];
+					
+					//a t on une valeur?
+					if(distance == 0) {
+						//on récupère l'inverse
+						distance = matrice[j][i];
+					}
+					
+					if(distance > 0)
+						liste[i].enfile(new Noeud(new Info(j,distance)));	
+				}
+					
+			}
+		}	
+		
+		public void afficheFilesDistances() {
+			//module 28.06.2019
+			System.out.println("\n----- Affiche liste de files avec distances -----");
+			for (int i = 0; i < liste.length; i++) {
+				System.out.print("file ["+i+"]: \t");
+		
+				Noeud courant = liste[i].getPremier() ;
+		
+				while (courant != null)
+				{
+					System.out.print(courant.getInfo().getValeur()+ "/"+courant.getInfo().getDistance()+" ");
+					courant = courant.getSuivant() ;
+				}
+				System.out.println();	
+			}
+		}
+		
 }
 

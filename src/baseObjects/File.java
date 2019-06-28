@@ -160,12 +160,11 @@ public class File {
 
 	public void affiche()
 	{
-//		System.out.println();
 		Noeud courant = premier ;
 
 		while (courant != null)
 		{
-			//System.out.print(courant.getInfo().toString()+ " ");
+			
 			System.out.print(courant.getInfo().getValeur()+ " ");
 			courant = courant.getSuivant() ;
 		}
@@ -282,6 +281,40 @@ public class File {
 		enfile(n);
 		
 	}
-	
-	
+
+	public void incremente() {
+		// Module 28.06.2019
+		
+		System.out.println("Increment de 1");
+		
+		//on inverse la file pour commencer par la fin
+		inverse();
+		
+		boolean report = false; //stock le report d'unité=> dizaine
+		Noeud courant = getPremier();
+		
+		do{
+			//fin de file
+			if(courant == null) {
+				Noeud nouveau = new Noeud(new Info(1));
+				enfile(nouveau);
+				break;
+			}
+			
+			//report?
+			if(courant.getInfo().getValeur() == 0) {
+				courant.getInfo().setValeur(1);
+				report = false;
+			}
+			else {
+				courant.getInfo().setValeur(0);
+				report = true;
+			}
+			
+			courant = courant.getSuivant();
+			
+		}while(report);
+		
+		inverse();
+	}
 }
