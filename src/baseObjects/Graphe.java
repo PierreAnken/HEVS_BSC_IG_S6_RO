@@ -358,11 +358,13 @@ public class Graphe {
 			//CC 24.05.2019
 			
 			// 2 sommets sont fortement connexes s'il existe un chemin aller-retour entre les 2
-			
+			boolean fortementConnexe = false;
 			boolean cheminAller = aUnChemin(sommetA,sommetB);
-			boolean cheminRetour = aUnChemin(sommetB,sommetA);
 			
-			System.out.println("Est-ce que les sommets "+sommetA+" et "+sommetB+" sont dans la même composante fortement connexe? "+(cheminAller && cheminRetour));
+			if(cheminAller)
+				fortementConnexe = aUnChemin(sommetB,sommetA);
+			
+			System.out.println("Est-ce que les sommets "+sommetA+" et "+sommetB+" sont dans la même composante fortement connexe? "+fortementConnexe);
 		
 		}
 }
